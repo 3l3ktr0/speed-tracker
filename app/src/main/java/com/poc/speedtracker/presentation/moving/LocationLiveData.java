@@ -72,6 +72,6 @@ public class LocationLiveData extends LiveData<LocationModel> {
         }
         Log.d("Speed", location.hasSpeed()+"");
 
-        setValue(new LocationModel(location.getLongitude(), location.getLatitude()));
+        //setValue(new LocationModel(location.getLongitude(), location.getLatitude()));
     }
 }

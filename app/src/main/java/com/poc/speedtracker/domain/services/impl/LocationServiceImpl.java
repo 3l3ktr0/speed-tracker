@@ -3,22 +3,24 @@ package com.poc.speedtracker.domain.services.impl;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.poc.speedtracker.data.LocationModel;
+import com.poc.speedtracker.data.LocationRepository;
 import com.poc.speedtracker.domain.services.LocationService;
 
 public class LocationServiceImpl implements LocationService {
+    private LocationRepository locationRepository;
+
+    public LocationServiceImpl(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+    }
+
     @Override
-    public LiveData<Float> getCurrentSpeed() {
-        final MutableLiveData<Float> data = new MutableLiveData<>();
+    public LiveData<LocationModel> getLocationData() {
+        return locationRepository.getLocationData();
+    }
 
-//        gitHubService.getProjectList(userId).enqueue(new Callback<List<Project>>() {
-//            @Override
-//            public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
-//                data.setValue(response.body());
-//            }
-//
-//            // Error handling will be explained in the next article …
-//        });
-
-        return data;
+    @Override
+    public void stopLocation() {
+        locationRepository.stopLocation();
     }
 }

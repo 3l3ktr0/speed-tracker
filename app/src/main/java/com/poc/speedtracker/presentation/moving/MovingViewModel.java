@@ -8,17 +8,25 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.location.LocationServices;
 import com.poc.speedtracker.data.LocationModel;
+import com.poc.speedtracker.data.LocationRepository;
 import com.poc.speedtracker.domain.services.LocationService;
 import com.poc.speedtracker.domain.services.impl.LocationServiceImpl;
 
 public class MovingViewModel extends AndroidViewModel {
     private final LiveData<LocationModel> currentSpeedObservable;
+    private LocationService locationService;
 
     public MovingViewModel(Application application) {
         super(application);
         // If any transformation is needed, this can be simply done by Transformations class ...
-        LocationService locationService = new LocationServiceImpl();
-        currentSpeedObservable = new LocationLiveData(application);
+        locationService = new LocationServiceImpl(new LocationRepository(application));
+        currentSpeedObservable = locationService.getLocationData();
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        locationService.stopLocation();
     }
 
     /**
