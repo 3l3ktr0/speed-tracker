@@ -1,5 +1,7 @@
 package com.poc.speedtracker.presentation.moving;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,12 +18,14 @@ import android.view.ViewGroup;
 
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.data.LocationModel;
+import com.poc.speedtracker.databinding.MovingFragmentBinding;
 
 public class MovingFragment extends Fragment {
 
     public static final String TAG = "MovingFragment";
 
     private MovingViewModel viewModel;
+    private MovingFragmentBinding binding;
 
     public static MovingFragment newInstance() {
         return new MovingFragment();
@@ -30,7 +34,11 @@ public class MovingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.moving_fragment, container, false);
+        binding = DataBindingUtil.inflate(
+                inflater, R.layout.moving_fragment, container, false);
+        View view = binding.getRoot();
+        binding.setLifecycleOwner(this);
+        return view;
     }
 
     @Override
@@ -38,10 +46,11 @@ public class MovingFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(MovingViewModel.class);
 
-        viewModel.getCurrentSpeed().observe(getViewLifecycleOwner(), new Observer<LocationModel>() {
+        binding.setLocation(viewModel);
+
+        viewModel.getCurrentSpeed().observe(getViewLifecycleOwner(), new Observer<Float>() {
             @Override
-            public void onChanged(LocationModel locationModel) {
-                Log.d("Location", locationModel.longitude+" "+locationModel.latitude);
+            public void onChanged(Float locationModel) {
             }
         });
     }

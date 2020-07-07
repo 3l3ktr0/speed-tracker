@@ -32,8 +32,8 @@ public class LocationRepository {
 
     public LocationRepository(@NonNull Context context) {
         fusedLocationProviderClient = new FusedLocationProviderClient(context);
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(1000);
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(500);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
