@@ -1,9 +1,8 @@
 package com.poc.speedtracker.presentation.moving;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
@@ -11,14 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.poc.speedtracker.R;
-import com.poc.speedtracker.data.LocationModel;
 import com.poc.speedtracker.databinding.MovingFragmentBinding;
+import com.poc.speedtracker.presentation.views.MainActivity;
 
 public class MovingFragment extends Fragment {
 
@@ -44,13 +42,19 @@ public class MovingFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(MovingViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(MovingViewModel.class);
 
         binding.setLocation(viewModel);
 
-        viewModel.getCurrentSpeed().observe(getViewLifecycleOwner(), new Observer<Float>() {
+        viewModel.userStopped().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
-            public void onChanged(Float locationModel) {
+            public void onChanged(Boolean userStopped) {
+                if (userStopped) {
+                    MainActivity activity = (MainActivity) getActivity();
+                    if (activity != null) {
+                        activity.showAverageSpeedFragment();
+                    }
+                }
             }
         });
     }

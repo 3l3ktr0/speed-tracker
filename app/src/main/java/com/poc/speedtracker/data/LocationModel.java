@@ -12,4 +12,13 @@ public class LocationModel {
         this.latitude = latitude;
         this.speed = speed;
     }
+
+    @Override
+    public String toString() {
+        return "LocationModel{" +
+                "longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", speed=" + speed +
+                '}';
+    }
 }
