@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">SpeedTracker</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="moving_speed_text">Votre vitesse</string>
+    <string name="average_speed_text">Vitesse moyenne depuis votre dernier arrêt</string>
+    <string name="actual_speed">%.1f km/h</string>
+    <string name="need_location_permission">Vous devez autoriser l\'accès à votre localisation pour pouvoir utiliser cette application.</string>
+    <string name="need_location_permission_button">Autoriser l\'accès</string>
 </resources>

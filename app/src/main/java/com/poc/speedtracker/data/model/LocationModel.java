@@ -1,5 +1,7 @@
 package com.poc.speedtracker.data.model;
 
+import androidx.annotation.NonNull;
+
 public class LocationModel {
     public Double longitude;
     public Double latitude;
@@ -13,6 +15,7 @@ public class LocationModel {
         this.speed = speed;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "LocationModel{" +

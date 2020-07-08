@@ -3,6 +3,7 @@ package com.poc.speedtracker.di;
 import android.content.Context;
 
 import com.poc.speedtracker.data.repository.LocationRepository;
+import com.poc.speedtracker.data.repository.impl.LocationRepositoryImpl;
 import com.poc.speedtracker.domain.services.LocationService;
 import com.poc.speedtracker.domain.services.impl.LocationServiceImpl;
 
@@ -23,6 +24,6 @@ public class ApplicationModule {
     @Singleton
     @Provides
     static LocationRepository provideLocationRepository(Context context) {
-        return new LocationRepository(context);
+        return new LocationRepositoryImpl(context);
     }
 }
