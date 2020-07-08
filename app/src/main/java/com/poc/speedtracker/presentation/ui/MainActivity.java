@@ -1,14 +1,13 @@
-package com.poc.speedtracker.presentation.views;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.poc.speedtracker.presentation.ui;
 
 import android.os.Bundle;
 
 import com.poc.speedtracker.R;
-import com.poc.speedtracker.presentation.moving.AverageSpeedFragment;
-import com.poc.speedtracker.presentation.moving.MovingFragment;
+import com.poc.speedtracker.presentation.base.BaseActivity;
+import com.poc.speedtracker.presentation.ui.AverageSpeedFragment;
+import com.poc.speedtracker.presentation.ui.MovingFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        super.onBackPressed();
     }
 }

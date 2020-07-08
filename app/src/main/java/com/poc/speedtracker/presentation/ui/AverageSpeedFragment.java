@@ -1,10 +1,9 @@
-package com.poc.speedtracker.presentation.moving;
+package com.poc.speedtracker.presentation.ui;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,8 +14,16 @@ import android.view.ViewGroup;
 
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.databinding.AverageSpeedFragmentBinding;
+import com.poc.speedtracker.presentation.viewmodels.MovingViewModel;
+import com.poc.speedtracker.presentation.viewmodels.ViewModelFactory;
+import com.poc.speedtracker.presentation.base.BaseFragment;
 
-public class AverageSpeedFragment extends Fragment {
+import javax.inject.Inject;
+
+public class AverageSpeedFragment extends BaseFragment {
+
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     private MovingViewModel viewModel;
     private AverageSpeedFragmentBinding binding;
@@ -42,7 +49,7 @@ public class AverageSpeedFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(MovingViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(MovingViewModel.class);
 
         binding.setLocation(viewModel);
 

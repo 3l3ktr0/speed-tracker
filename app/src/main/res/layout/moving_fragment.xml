@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="location" type="com.poc.speedtracker.presentation.moving.MovingViewModel"/>
+        <variable name="location" type="com.poc.speedtracker.presentation.viewmodels.MovingViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.moving.MovingFragment">
+    tools:context=".presentation.ui.MovingFragment">
 
     <TextView
         android:id="@+id/textView"

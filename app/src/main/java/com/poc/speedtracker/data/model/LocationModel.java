@@ -1,4 +1,4 @@
-package com.poc.speedtracker.data;
+package com.poc.speedtracker.data.model;
 
 public class LocationModel {
     public Double longitude;

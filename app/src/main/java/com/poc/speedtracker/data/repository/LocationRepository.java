@@ -1,24 +1,25 @@
-package com.poc.speedtracker.presentation.moving;
+package com.poc.speedtracker.data.repository;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
-import android.os.Build;
-import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.poc.speedtracker.data.LocationModel;
+import com.poc.speedtracker.data.model.LocationModel;
 
-public class LocationLiveData extends LiveData<LocationModel> {
+public class LocationRepository {
+
     private FusedLocationProviderClient fusedLocationProviderClient;
-
     private final LocationRequest locationRequest = new LocationRequest();
+    private final MutableLiveData<LocationModel> data = new MutableLiveData<>();
 
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -30,30 +31,29 @@ public class LocationLiveData extends LiveData<LocationModel> {
         }
     };
 
-    public LocationLiveData(Context context) {
+    public LocationRepository(@NonNull Context context) {
         fusedLocationProviderClient = new FusedLocationProviderClient(context);
-        locationRequest.setInterval(5000);
-        locationRequest.setFastestInterval(1000);
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(500);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
-    @Override
-    protected void onInactive() {
-        super.onInactive();
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
-    }
-
     @SuppressLint("MissingPermission")
-    @Override
-    protected void onActive() {
-        super.onActive();
+    public LiveData<LocationModel> getLocationData() {
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                setLocationData(location);
+                if (location != null) {
+                    setLocationData(location);
+                }
                 startLocationUpdates();
             }
         });
+        return data;
+    }
+
+    public void stopLocation() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
     @SuppressLint("MissingPermission")
@@ -64,14 +64,11 @@ public class LocationLiveData extends LiveData<LocationModel> {
                 null
         );
     }
-    private void setLocationData(Location location) {
 
-        Log.d("Speed", location.getSpeed()+"");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.d("Speed", location.getSpeedAccuracyMetersPerSecond()+"");
-        }
-        Log.d("Speed", location.hasSpeed()+"");
-
-        //setValue(new LocationModel(location.getLongitude(), location.getLatitude()));
+    private void setLocationData(@NonNull Location location) {
+        data.setValue(new LocationModel(location.getLongitude(),
+                location.getLatitude(),
+                location.getSpeed()));
     }
 }
+

@@ -1,10 +1,9 @@
 package com.poc.speedtracker.domain.services.impl;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.poc.speedtracker.data.LocationModel;
-import com.poc.speedtracker.data.LocationRepository;
+import com.poc.speedtracker.data.model.LocationModel;
+import com.poc.speedtracker.data.repository.LocationRepository;
 import com.poc.speedtracker.domain.services.LocationService;
 
 public class LocationServiceImpl implements LocationService {

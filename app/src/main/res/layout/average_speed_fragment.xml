@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="location" type="com.poc.speedtracker.presentation.moving.MovingViewModel"/>
+        <variable name="location" type="com.poc.speedtracker.presentation.viewmodels.MovingViewModel"/>
     </data>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.moving.AverageSpeedFragment">
+        tools:context=".presentation.ui.AverageSpeedFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView

@@ -1,4 +1,4 @@
-package com.poc.speedtracker.presentation.moving;
+package com.poc.speedtracker.presentation.ui;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +15,19 @@ import android.view.ViewGroup;
 
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.databinding.MovingFragmentBinding;
-import com.poc.speedtracker.presentation.views.MainActivity;
+import com.poc.speedtracker.presentation.viewmodels.MovingViewModel;
+import com.poc.speedtracker.presentation.viewmodels.ViewModelFactory;
+import com.poc.speedtracker.presentation.base.BaseFragment;
 
-public class MovingFragment extends Fragment {
+import javax.inject.Inject;
+
+public class MovingFragment extends BaseFragment {
 
     public static final String TAG = "MovingFragment";
 
-    private MovingViewModel viewModel;
+    @Inject
+    ViewModelFactory viewModelFactory;
+
     private MovingFragmentBinding binding;
 
     public static MovingFragment newInstance() {
@@ -42,7 +47,7 @@ public class MovingFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(MovingViewModel.class);
+        MovingViewModel viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(MovingViewModel.class);
 
         binding.setLocation(viewModel);
 
@@ -58,5 +63,4 @@ public class MovingFragment extends Fragment {
             }
         });
     }
-
 }

@@ -1,4 +1,4 @@
-package com.poc.speedtracker.presentation.moving;
+package com.poc.speedtracker.presentation.viewmodels;
 
 import android.app.Application;
 import android.os.Handler;
@@ -9,13 +9,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
-import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.location.LocationServices;
-import com.poc.speedtracker.data.LocationModel;
-import com.poc.speedtracker.data.LocationRepository;
+import com.poc.speedtracker.data.model.LocationModel;
 import com.poc.speedtracker.domain.services.LocationService;
-import com.poc.speedtracker.domain.services.impl.LocationServiceImpl;
+
+import javax.inject.Inject;
 
 public class MovingViewModel extends AndroidViewModel {
     private final LiveData<LocationModel> currentSpeedObservable;
@@ -33,12 +31,13 @@ public class MovingViewModel extends AndroidViewModel {
     };
     private Boolean userTemporaryStopped = false;
 
-    private LocationService locationService;
+    private final LocationService locationService;
 
-    public MovingViewModel(Application application) {
+    @Inject
+    public MovingViewModel(LocationService locationService, Application application) {
         super(application);
         // If any transformation is needed, this can be simply done by Transformations class ...
-        locationService = new LocationServiceImpl(new LocationRepository(application));
+        this.locationService = locationService;
         currentSpeedObservable = locationService.getLocationData();
         userStoppedObservable = new MutableLiveData<>(false);
     }
