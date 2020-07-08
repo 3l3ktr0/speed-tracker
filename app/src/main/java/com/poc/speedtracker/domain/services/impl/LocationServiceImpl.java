@@ -6,9 +6,12 @@ import com.poc.speedtracker.data.model.LocationModel;
 import com.poc.speedtracker.data.repository.LocationRepository;
 import com.poc.speedtracker.domain.services.LocationService;
 
+import javax.inject.Inject;
+
 public class LocationServiceImpl implements LocationService {
     private LocationRepository locationRepository;
 
+    @Inject
     public LocationServiceImpl(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }

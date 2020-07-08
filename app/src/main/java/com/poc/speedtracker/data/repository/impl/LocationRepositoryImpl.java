@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.poc.speedtracker.data.model.LocationModel;
 import com.poc.speedtracker.data.repository.LocationRepository;
 
+import javax.inject.Inject;
+
 public class LocationRepositoryImpl implements LocationRepository {
 
     private static final int LOCATION_INTERVAL = 1000;
@@ -35,6 +37,7 @@ public class LocationRepositoryImpl implements LocationRepository {
         }
     };
 
+    @Inject
     public LocationRepositoryImpl(@NonNull Context context) {
         fusedLocationProviderClient = new FusedLocationProviderClient(context);
         locationRequest.setInterval(LOCATION_INTERVAL);
