@@ -1,23 +1,21 @@
 package com.poc.speedtracker.presentation.ui;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.databinding.MovingFragmentBinding;
+import com.poc.speedtracker.presentation.base.BaseFragment;
 import com.poc.speedtracker.presentation.viewmodels.MovingViewModel;
 import com.poc.speedtracker.presentation.viewmodels.ViewModelFactory;
-import com.poc.speedtracker.presentation.base.BaseFragment;
 
 import javax.inject.Inject;
 
@@ -37,8 +35,7 @@ public class MovingFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.moving_fragment, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.moving_fragment, container, false);
         View view = binding.getRoot();
         binding.setLifecycleOwner(this);
         return view;

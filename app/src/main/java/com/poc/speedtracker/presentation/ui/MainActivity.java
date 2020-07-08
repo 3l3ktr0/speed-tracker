@@ -4,8 +4,6 @@ import android.os.Bundle;
 
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.presentation.base.BaseActivity;
-import com.poc.speedtracker.presentation.ui.AverageSpeedFragment;
-import com.poc.speedtracker.presentation.ui.MovingFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -25,8 +23,8 @@ public class MainActivity extends BaseActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack(null)
-                .replace(R.id.fragment_container, projectFragment, null).commit();
+                .addToBackStack(AverageSpeedFragment.TAG)
+                .replace(R.id.fragment_container, projectFragment, AverageSpeedFragment.TAG).commit();
     }
 
     @Override

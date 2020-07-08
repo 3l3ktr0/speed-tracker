@@ -1,36 +1,32 @@
 package com.poc.speedtracker.presentation.ui;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.databinding.AverageSpeedFragmentBinding;
+import com.poc.speedtracker.presentation.base.BaseFragment;
 import com.poc.speedtracker.presentation.viewmodels.MovingViewModel;
 import com.poc.speedtracker.presentation.viewmodels.ViewModelFactory;
-import com.poc.speedtracker.presentation.base.BaseFragment;
 
 import javax.inject.Inject;
 
 public class AverageSpeedFragment extends BaseFragment {
 
+    public static final String TAG = "AverageSpeedFragment";
+
     @Inject
     ViewModelFactory viewModelFactory;
 
-    private MovingViewModel viewModel;
     private AverageSpeedFragmentBinding binding;
-
-    public AverageSpeedFragment() {
-        // Required empty public constructor
-    }
 
     public static AverageSpeedFragment newInstance() {
         return new AverageSpeedFragment();
@@ -49,7 +45,7 @@ public class AverageSpeedFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(MovingViewModel.class);
+        MovingViewModel viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(MovingViewModel.class);
 
         binding.setLocation(viewModel);
 
@@ -57,7 +53,6 @@ public class AverageSpeedFragment extends BaseFragment {
             @Override
             public void onChanged(Boolean userStartMoving) {
                 if (userStartMoving) {
-                    Log.d("STOP", "User started moving again");
                     getActivity().getSupportFragmentManager().popBackStack();
                 }
             }

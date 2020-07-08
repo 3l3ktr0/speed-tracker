@@ -17,6 +17,9 @@ import com.poc.speedtracker.data.model.LocationModel;
 
 public class LocationRepository {
 
+    private static final int LOCATION_INTERVAL = 1000;
+    private static final int LOCATION_FASTEST_INTERVAL = 500;
+
     private FusedLocationProviderClient fusedLocationProviderClient;
     private final LocationRequest locationRequest = new LocationRequest();
     private final MutableLiveData<LocationModel> data = new MutableLiveData<>();
@@ -33,8 +36,8 @@ public class LocationRepository {
 
     public LocationRepository(@NonNull Context context) {
         fusedLocationProviderClient = new FusedLocationProviderClient(context);
-        locationRequest.setInterval(1000);
-        locationRequest.setFastestInterval(500);
+        locationRequest.setInterval(LOCATION_INTERVAL);
+        locationRequest.setFastestInterval(LOCATION_FASTEST_INTERVAL);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
