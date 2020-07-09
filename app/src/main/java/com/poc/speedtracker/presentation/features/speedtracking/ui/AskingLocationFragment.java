@@ -1,4 +1,4 @@
-package com.poc.speedtracker.presentation.ui;
+package com.poc.speedtracker.presentation.features.speedtracking.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.databinding.AskingLocationFragmentBinding;
+import com.poc.speedtracker.presentation.features.speedtracking.MainActivity;
 
 public class AskingLocationFragment extends Fragment {
 

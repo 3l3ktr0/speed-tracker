@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="location" type="com.poc.speedtracker.presentation.viewmodels.MovingViewModel"/>
+        <variable name="location" type="com.poc.speedtracker.presentation.features.speedtracking.viewmodels.MovingViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.AverageSpeedFragment">
+        tools:context=".presentation.features.speedtracking.ui.AverageSpeedFragment">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view"

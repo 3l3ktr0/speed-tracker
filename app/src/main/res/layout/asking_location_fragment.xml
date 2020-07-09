@@ -5,13 +5,13 @@
     <data>
         <variable
             name="handler"
-            type="com.poc.speedtracker.presentation.ui.AskingLocationFragment" />
+            type="com.poc.speedtracker.presentation.features.speedtracking.ui.AskingLocationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.AskingLocationFragment">
+        tools:context=".presentation.features.speedtracking.ui.AskingLocationFragment">
 
         <TextView
             android:layout_width="wrap_content"

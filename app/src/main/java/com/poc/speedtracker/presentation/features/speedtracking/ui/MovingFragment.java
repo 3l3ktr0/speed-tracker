@@ -1,4 +1,4 @@
-package com.poc.speedtracker.presentation.ui;
+package com.poc.speedtracker.presentation.features.speedtracking.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,9 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.databinding.MovingFragmentBinding;
+import com.poc.speedtracker.di.viewmodel.ViewModelFactory;
 import com.poc.speedtracker.presentation.base.BaseFragment;
-import com.poc.speedtracker.presentation.viewmodels.MovingViewModel;
-import com.poc.speedtracker.presentation.viewmodels.ViewModelFactory;
+import com.poc.speedtracker.presentation.features.speedtracking.MainActivity;
+import com.poc.speedtracker.presentation.features.speedtracking.viewmodels.MovingViewModel;
 
 import javax.inject.Inject;
 
@@ -59,5 +60,11 @@ public class MovingFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

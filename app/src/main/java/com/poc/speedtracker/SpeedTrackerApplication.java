@@ -6,7 +6,7 @@ import com.poc.speedtracker.di.DaggerApplicationComponent;
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 
-public class BaseApplication extends DaggerApplication {
+public class SpeedTrackerApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {

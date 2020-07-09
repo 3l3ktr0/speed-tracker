@@ -1,17 +1,16 @@
-package com.poc.speedtracker.di;
+package com.poc.speedtracker.di.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.poc.speedtracker.presentation.viewmodels.MovingViewModel;
-import com.poc.speedtracker.presentation.viewmodels.ViewModelFactory;
+import com.poc.speedtracker.presentation.features.speedtracking.viewmodels.MovingViewModel;
 
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
 
 @Module
-abstract class ViewModelModule {
+public abstract class ViewModelModule {
 
     @Binds
     @IntoMap

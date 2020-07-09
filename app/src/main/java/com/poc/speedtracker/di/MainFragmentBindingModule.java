@@ -1,7 +1,7 @@
 package com.poc.speedtracker.di;
 
-import com.poc.speedtracker.presentation.ui.AverageSpeedFragment;
-import com.poc.speedtracker.presentation.ui.MovingFragment;
+import com.poc.speedtracker.presentation.features.speedtracking.ui.AverageSpeedFragment;
+import com.poc.speedtracker.presentation.features.speedtracking.ui.MovingFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

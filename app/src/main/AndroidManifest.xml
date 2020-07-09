@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".BaseApplication">
-        <activity android:name=".presentation.ui.MainActivity">
+        android:name=".SpeedTrackerApplication">
+        <activity android:name=".presentation.features.speedtracking.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

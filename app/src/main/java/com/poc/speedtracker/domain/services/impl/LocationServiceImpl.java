@@ -3,7 +3,7 @@ package com.poc.speedtracker.domain.services.impl;
 import androidx.lifecycle.LiveData;
 
 import com.poc.speedtracker.data.model.LocationModel;
-import com.poc.speedtracker.data.repository.LocationRepository;
+import com.poc.speedtracker.domain.repository.LocationRepository;
 import com.poc.speedtracker.domain.services.LocationService;
 
 import javax.inject.Inject;
@@ -19,10 +19,5 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public LiveData<LocationModel> getLocationData() {
         return locationRepository.getLocationData();
-    }
-
-    @Override
-    public void stopLocation() {
-        locationRepository.stopLocation();
     }
 }

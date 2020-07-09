@@ -1,4 +1,4 @@
-package com.poc.speedtracker.data.repository.impl;
+package com.poc.speedtracker.data.model;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,26 +6,19 @@ import android.location.Location;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.poc.speedtracker.data.model.LocationModel;
-import com.poc.speedtracker.data.repository.LocationRepository;
 
-import javax.inject.Inject;
-
-public class LocationRepositoryImpl implements LocationRepository {
-
+public class LocationLiveData extends LiveData<LocationModel> {
     private static final int LOCATION_INTERVAL = 1000;
     private static final int LOCATION_FASTEST_INTERVAL = 500;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private final LocationRequest locationRequest = new LocationRequest();
-    private final MutableLiveData<LocationModel> data = new MutableLiveData<>();
 
     private LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -37,8 +30,7 @@ public class LocationRepositoryImpl implements LocationRepository {
         }
     };
 
-    @Inject
-    public LocationRepositoryImpl(@NonNull Context context) {
+    public LocationLiveData(Context context) {
         fusedLocationProviderClient = new FusedLocationProviderClient(context);
         locationRequest.setInterval(LOCATION_INTERVAL);
         locationRequest.setFastestInterval(LOCATION_FASTEST_INTERVAL);
@@ -46,7 +38,8 @@ public class LocationRepositoryImpl implements LocationRepository {
     }
 
     @SuppressLint("MissingPermission")
-    public LiveData<LocationModel> getLocationData() {
+    @Override
+    protected void onActive() {
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -56,11 +49,6 @@ public class LocationRepositoryImpl implements LocationRepository {
                 startLocationUpdates();
             }
         });
-        return data;
-    }
-
-    public void stopLocation() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
     @SuppressLint("MissingPermission")
@@ -72,10 +60,14 @@ public class LocationRepositoryImpl implements LocationRepository {
         );
     }
 
+    @Override
+    protected void onInactive() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+    }
+
     private void setLocationData(@NonNull Location location) {
-        data.setValue(new LocationModel(location.getLongitude(),
+        setValue(new LocationModel(location.getLongitude(),
                 location.getLatitude(),
                 location.getSpeed() * 3.6f));
     }
 }
-

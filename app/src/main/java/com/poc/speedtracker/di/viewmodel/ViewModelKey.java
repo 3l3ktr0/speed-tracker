@@ -1,4 +1,4 @@
-package com.poc.speedtracker.di;
+package com.poc.speedtracker.di.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 

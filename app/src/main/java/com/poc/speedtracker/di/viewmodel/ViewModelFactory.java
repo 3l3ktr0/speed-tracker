@@ -1,4 +1,4 @@
-package com.poc.speedtracker.presentation.viewmodels;
+package com.poc.speedtracker.di.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

@@ -1,4 +1,4 @@
-package com.poc.speedtracker.presentation.ui;
+package com.poc.speedtracker.presentation.features.speedtracking;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -10,6 +10,9 @@ import androidx.core.content.ContextCompat;
 
 import com.poc.speedtracker.R;
 import com.poc.speedtracker.presentation.base.BaseActivity;
+import com.poc.speedtracker.presentation.features.speedtracking.ui.AskingLocationFragment;
+import com.poc.speedtracker.presentation.features.speedtracking.ui.AverageSpeedFragment;
+import com.poc.speedtracker.presentation.features.speedtracking.ui.MovingFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -40,10 +43,10 @@ public class MainActivity extends BaseActivity {
         if (requestCode == PERMISSIONS_REQUEST_LOCATION) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // TODO: Refacto
                 if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
-
                     showMovingFragment();
                 }
             } else {

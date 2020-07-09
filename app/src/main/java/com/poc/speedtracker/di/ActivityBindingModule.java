@@ -1,6 +1,6 @@
 package com.poc.speedtracker.di;
 
-import com.poc.speedtracker.presentation.ui.MainActivity;
+import com.poc.speedtracker.presentation.features.speedtracking.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

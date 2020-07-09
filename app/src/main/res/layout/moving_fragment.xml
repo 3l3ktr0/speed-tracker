@@ -2,18 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
-
         <variable
             name="location"
-            type="com.poc.speedtracker.presentation.viewmodels.MovingViewModel" />
+            type="com.poc.speedtracker.presentation.features.speedtracking.viewmodels.MovingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.MovingFragment">
+        tools:context=".presentation.features.speedtracking.ui.MovingFragment">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_view"

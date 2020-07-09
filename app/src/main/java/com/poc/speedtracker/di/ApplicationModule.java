@@ -1,7 +1,8 @@
 package com.poc.speedtracker.di;
 
-import com.poc.speedtracker.data.repository.LocationRepository;
-import com.poc.speedtracker.data.repository.impl.LocationRepositoryImpl;
+import com.poc.speedtracker.data.repository.LocationRepositoryImpl;
+import com.poc.speedtracker.di.viewmodel.ViewModelModule;
+import com.poc.speedtracker.domain.repository.LocationRepository;
 import com.poc.speedtracker.domain.services.LocationService;
 import com.poc.speedtracker.domain.services.impl.LocationServiceImpl;
 

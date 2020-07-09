@@ -6,5 +6,4 @@ import com.poc.speedtracker.data.model.LocationModel;
 
 public interface LocationService {
     LiveData<LocationModel> getLocationData();
-    void stopLocation();
 }

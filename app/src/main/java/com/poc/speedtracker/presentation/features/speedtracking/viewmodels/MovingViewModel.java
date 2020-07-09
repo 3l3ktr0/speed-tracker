@@ -1,20 +1,24 @@
-package com.poc.speedtracker.presentation.viewmodels;
+package com.poc.speedtracker.presentation.features.speedtracking.viewmodels;
 
-import android.app.Application;
 import android.os.Handler;
 
 import androidx.arch.core.util.Function;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
+import androidx.lifecycle.ViewModel;
 
 import com.poc.speedtracker.data.model.LocationModel;
 import com.poc.speedtracker.domain.services.LocationService;
 
 import javax.inject.Inject;
 
-public class MovingViewModel extends AndroidViewModel {
+public class MovingViewModel extends ViewModel {
+    /**
+     * We will trigger the user stopped event only if he's stopped for 2 seconds
+     */
+    private static final int DELAY_STOP_EVENT = 2000;
+
     private final LiveData<LocationModel> currentSpeedObservable;
     private final MutableLiveData<Boolean> userStoppedObservable;
 
@@ -31,21 +35,10 @@ public class MovingViewModel extends AndroidViewModel {
     };
     private Boolean userTemporaryStopped = false;
 
-    private final LocationService locationService;
-
     @Inject
-    public MovingViewModel(LocationService locationService, Application application) {
-        super(application);
-
-        this.locationService = locationService;
+    public MovingViewModel(LocationService locationService) {
         currentSpeedObservable = locationService.getLocationData();
         userStoppedObservable = new MutableLiveData<>(false);
-    }
-
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        locationService.stopLocation();
     }
 
     public LiveData<Boolean> userStopped() {
@@ -75,7 +68,7 @@ public class MovingViewModel extends AndroidViewModel {
                     if (!userTemporaryStopped) {
                         userTemporaryStopped = true;
                         // We will trigger the user stopped event only if he's stopped for 2 seconds
-                        stopHandler.postDelayed(stopActionRunnable, 2000);
+                        stopHandler.postDelayed(stopActionRunnable, DELAY_STOP_EVENT);
                     }
                 } else {
                     // User is moving, cancel stopped event if planned
