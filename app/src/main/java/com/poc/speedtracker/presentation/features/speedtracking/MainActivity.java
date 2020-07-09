@@ -7,14 +7,24 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.poc.speedtracker.R;
+import com.poc.speedtracker.di.viewmodel.ViewModelFactory;
 import com.poc.speedtracker.presentation.base.BaseActivity;
 import com.poc.speedtracker.presentation.features.speedtracking.ui.AskingLocationFragment;
 import com.poc.speedtracker.presentation.features.speedtracking.ui.AverageSpeedFragment;
 import com.poc.speedtracker.presentation.features.speedtracking.ui.MovingFragment;
+import com.poc.speedtracker.presentation.features.speedtracking.viewmodels.MovingViewModel;
+
+import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
+
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     public static final int PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -25,11 +35,26 @@ public class MainActivity extends BaseActivity {
         checkLocationPermission();
     }
 
+    private void start() {
+        MovingViewModel viewModel = new ViewModelProvider(this, viewModelFactory).get(MovingViewModel.class);
+
+        Transformations.distinctUntilChanged(viewModel.userStartMoving())
+                .observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean userMoving) {
+                        if (userMoving) {
+                            showMovingFragment();
+                        } else {
+                            showAverageSpeedFragment();
+                        }
+                    }
+                });
+    }
+
     public void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-            showMovingFragment();
-        }  else {
+        if (checkLocationPermissionGranted()) {
+            start();
+        } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_LOCATION);
@@ -43,16 +68,19 @@ public class MainActivity extends BaseActivity {
         if (requestCode == PERMISSIONS_REQUEST_LOCATION) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // TODO: Refacto
-                if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    showMovingFragment();
+                if (checkLocationPermissionGranted()) {
+                    start();
                 }
             } else {
                 showAskingLocationFragment();
             }
         }
+    }
+
+    private boolean checkLocationPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     private void showAskingLocationFragment() {
@@ -74,12 +102,6 @@ public class MainActivity extends BaseActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack(AverageSpeedFragment.TAG)
                 .replace(R.id.fragment_container, projectFragment, AverageSpeedFragment.TAG).commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
     }
 }

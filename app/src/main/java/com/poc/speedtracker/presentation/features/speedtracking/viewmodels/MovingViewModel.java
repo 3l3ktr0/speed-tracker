@@ -1,6 +1,7 @@
 package com.poc.speedtracker.presentation.features.speedtracking.viewmodels;
 
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
@@ -20,7 +21,7 @@ public class MovingViewModel extends ViewModel {
     private static final int DELAY_STOP_EVENT = 2000;
 
     private final LiveData<LocationModel> currentSpeedObservable;
-    private final MutableLiveData<Boolean> userStoppedObservable;
+    private boolean userStopped = false;
 
     private Float averageSpeed = 0f;
     // Number of values used to compute the current average speed
@@ -30,7 +31,7 @@ public class MovingViewModel extends ViewModel {
     private Runnable stopActionRunnable = new Runnable() {
         @Override
         public void run() {
-            userStoppedObservable.setValue(true);
+            userStopped = true;
         }
     };
     private Boolean userTemporaryStopped = false;
@@ -38,22 +39,17 @@ public class MovingViewModel extends ViewModel {
     @Inject
     public MovingViewModel(LocationService locationService) {
         currentSpeedObservable = locationService.getLocationData();
-        userStoppedObservable = new MutableLiveData<>(false);
-    }
-
-    public LiveData<Boolean> userStopped() {
-        return userStoppedObservable;
     }
 
     public LiveData<Boolean> userStartMoving() {
         return Transformations.map(getCurrentSpeed(), new Function<Float, Boolean>() {
             @Override
             public Boolean apply(Float input) {
-                boolean isUserMovingAgain = input > 0;
+                boolean isUserMovingAgain = input > 0 && userStopped;
                 if (isUserMovingAgain) {
                     reset();
                 }
-                return isUserMovingAgain;
+                return input > 0 || !userStopped;
             }
         });
     }
@@ -63,7 +59,7 @@ public class MovingViewModel extends ViewModel {
             @Override
             public Float apply(LocationModel input) {
                 float currentSpeed = round(input.speed, 1);
-                if (currentSpeed == 0) {
+                if (currentSpeed < 1) {
                     // Detects if the user is already stopped
                     if (!userTemporaryStopped) {
                         userTemporaryStopped = true;
@@ -89,7 +85,7 @@ public class MovingViewModel extends ViewModel {
     }
 
     private void reset() {
-        userStoppedObservable.setValue(false);
+        userStopped = false;
         averageSpeed = 0f;
         ticks = 0;
     }

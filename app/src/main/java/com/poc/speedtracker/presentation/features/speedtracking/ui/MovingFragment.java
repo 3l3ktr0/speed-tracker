@@ -46,20 +46,7 @@ public class MovingFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MovingViewModel viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(MovingViewModel.class);
-
         binding.setLocation(viewModel);
-
-        viewModel.userStopped().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean userStopped) {
-                if (userStopped) {
-                    MainActivity activity = (MainActivity) getActivity();
-                    if (activity != null) {
-                        activity.showAverageSpeedFragment();
-                    }
-                }
-            }
-        });
     }
 
     @Override

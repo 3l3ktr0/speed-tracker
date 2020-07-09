@@ -45,17 +45,7 @@ public class AverageSpeedFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MovingViewModel viewModel = new ViewModelProvider(requireActivity(), viewModelFactory).get(MovingViewModel.class);
-
         binding.setLocation(viewModel);
-
-        viewModel.userStartMoving().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean userStartMoving) {
-                if (userStartMoving) {
-                    getActivity().getSupportFragmentManager().popBackStack();
-                }
-            }
-        });
     }
 
     @Override
