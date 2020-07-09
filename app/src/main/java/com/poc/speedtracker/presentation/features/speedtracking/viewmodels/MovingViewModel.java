@@ -18,7 +18,12 @@ public class MovingViewModel extends ViewModel {
     /**
      * We will trigger the user stopped event only if he's stopped for 2 seconds
      */
-    private static final int DELAY_STOP_EVENT = 2000;
+    private static final int DELAY_STOP_EVENT = 1500;
+
+    /**
+     * If user moves at less than 0.3km/h we consider he stopped
+     */
+    private static final float MIN_SPEED_MOVEMENT = 0.3f;
 
     private final LiveData<LocationModel> currentSpeedObservable;
     private boolean userStopped = false;
@@ -45,11 +50,11 @@ public class MovingViewModel extends ViewModel {
         return Transformations.map(getCurrentSpeed(), new Function<Float, Boolean>() {
             @Override
             public Boolean apply(Float input) {
-                boolean isUserMovingAgain = input > 0 && userStopped;
+                boolean isUserMovingAgain = input > MIN_SPEED_MOVEMENT && userStopped;
                 if (isUserMovingAgain) {
                     reset();
                 }
-                return input > 0 || !userStopped;
+                return input > MIN_SPEED_MOVEMENT || !userStopped;
             }
         });
     }
@@ -59,7 +64,7 @@ public class MovingViewModel extends ViewModel {
             @Override
             public Float apply(LocationModel input) {
                 float currentSpeed = round(input.speed, 1);
-                if (currentSpeed < 1) {
+                if (currentSpeed < MIN_SPEED_MOVEMENT) {
                     // Detects if the user is already stopped
                     if (!userTemporaryStopped) {
                         userTemporaryStopped = true;
